@@ -1,0 +1,24 @@
+#formContainer{
+    height: 500px;
+    width: 500px;
+    background-color: blue;
+
+    position: absolute;
+    display: none;
+    margin: 25%;
+    
+
+    justify-self: center;
+    align-self: center;
+    
+    
+}
+
+#titleInput{
+    display: block;
+}
+
+.labels{
+    display: block;
+}
+
