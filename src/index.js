@@ -12,5 +12,7 @@ newTaskDialog()
 newTaskButton.addEventListener("click", ()=> {
     const form = document.getElementById("formContainer");
     console.log(form);
-    form.style.display = "block";
+    form.classList.add('showContainer');
+    form.style.visibility = "visible";
+    form.style.opacity = 1;
 });

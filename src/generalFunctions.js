@@ -58,13 +58,26 @@ export function renderContent(page, container){
 }
 
 
-export function addFormField(fieldType, attributes, parent){
-    const newForm = createElement(fieldType);
-
-    for (key in attributes){
-        newForm.setAttribute(key, attributes[key]);
+export function addFormField(fieldType, attributes, text, parent){
+    const newField = createElement(fieldType);
+    for (let key in attributes){
+        newField.setAttribute(key, attributes[key]);
+        if(attributes[key] === 'submit'){
+            newField.value = text;
+        }
     }
 
+    if(text){newField.innerText = text;}
     parent.appendChild(newField);
-    
+
+    if(fieldType === 'select'){
+        ['Normal', 'High', 'Low'].forEach(each => {
+            let opt = document.createElement('option');
+            opt.innerText = each;
+            newField.appendChild(opt);})
+    }
+
+    return newField;
+
+}
 
