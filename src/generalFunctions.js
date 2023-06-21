@@ -1,4 +1,4 @@
-
+import { v4 as uuidv4} from 'uuid';
 /*
 Create element and append to DOM
 Args:
@@ -80,4 +80,35 @@ export function addFormField(fieldType, attributes, text, parent){
     return newField;
 
 }
+
+export function grabFormData(){
+    const taskObject = {
+        title:  document.getElementById('taskTitle').value,
+        project: document.getElementById('taskProject').value,
+        dueDate: document.getElementById('taskDueDate').value,
+        priority: document.getElementById('taskPriority').value,
+        description: document.getElementById('taskDescription').value,
+    }
+    console.log(taskObject);
+    return taskObject;
+}
+
+export function saveToLocalStorage(obj){
+    localStorage.setItem(obj.uniqueID, JSON.stringify(obj))
+}
+
+export function createTask(obj){
+    this.title = obj.title;
+    this.description = obj.description;
+    this.assignedProject = obj.project;
+    this.dueDate = obj.dueDate;
+    this.priority = obj.priority;
+    // this.dateCreated = dateCreated;
+    this.uniqueID = uuidv4();
+    // this.status = 'Not Started';
+    // this.dateModified = "";
+    // this.childrenID = {};
+}
+
+
 

@@ -1,4 +1,4 @@
-import { appendAChild, createElement, addFormField} from "./generalFunctions";
+import { appendAChild, createElement, addFormField, saveFormData} from "./generalFunctions";
 
 export function newTaskDialog(){
     const body = document.querySelector('body');
@@ -7,19 +7,18 @@ export function newTaskDialog(){
     const formContainer = createElement('div','formContainer', 'formContainer');
 
     //Create newTaskForm container
-    const newTaskForm = addFormField('form', {action: '', id: 'newTaskForm'}, '', formContainer)
+    const newTaskForm = addFormField('form', {action: '', onsubmit: 'return false', id: 'newTaskForm'}, '', formContainer)
     const newTaskHeader = createElement('h2', 'heading2', 'NewTaskHeading', 'Create a new task');
     appendAChild(newTaskForm, newTaskHeader);
 
     //Create label for Title
     const titleContainer = addFormField('div', {class: 'innerContainer'}, '', newTaskForm);
-    addFormField('label', {class: 'taskLabel', for: 'taskDescription'}, 'Title', titleContainer);
+    addFormField('label', {class: 'taskLabel', for: 'taskTitle'}, 'Title', titleContainer);
 
     //Create an input element for Title
     addFormField('input', {class: 'taskInput', type: 'text',
-    name: 'titleInput', placeholder: 'Enter task...', id: 'titleInput'}, '', titleContainer);
+    name: 'taskTitle', placeholder: 'Enter task...', id: 'taskTitle'}, '', titleContainer);
 
-   
     //Create an input element for Project
     addFormField('input', {class: 'taskInput', type: 'text',
     name: 'taskProject', placeholder: 'Project', id: 'taskProject'}, '', newTaskForm);
@@ -42,7 +41,7 @@ export function newTaskDialog(){
  
     //Create a select element for Priority
     addFormField('select', {class: 'taskInput',
-    name: 'taskDueDate', id: 'taskDueDate'}, '', priorityContainer);
+    name: 'taskDueDate', id: 'taskPriority'}, '', priorityContainer);
 
      //Create an input element for Description
      const descriptionContainer = addFormField('div', {class: 'innerContainer'}, '', taskDetailsContainer);
@@ -52,6 +51,8 @@ export function newTaskDialog(){
     //Create an submit element to save Task
     addFormField('input', {class: 'taskInput', type: 'submit',
     name: 'taskSaveButton', id: 'taskSaveButton'}, 'Create task', newTaskForm);
+
+    
 
     appendAChild(formContainer, newTaskForm);
     appendAChild(body, formContainer);

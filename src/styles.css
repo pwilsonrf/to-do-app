@@ -60,6 +60,9 @@
     width: 100%
 }
 
+.innerContainer{
+    width: 100%;
+}
 #taskDetailsContainer{
     display: flex;
     flex-direction: column;
