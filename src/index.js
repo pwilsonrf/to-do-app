@@ -9,11 +9,11 @@ import {
 // import {appendAChild } from './generalFunctions.js';
 import { newTaskDialog } from "./newTaskDialog.js";
 
-const body = document.querySelector("#main-container");
+const header = document.querySelector(".header");
 const newTaskButton = createElement("button", "newTask-button", "", "New Task");
 
 // console.log(newTaskButton);
-body.appendChild(newTaskButton);
+header.appendChild(newTaskButton);
 newTaskDialog();
 newTaskButton.addEventListener("click", () => {
    const form = document.getElementById("formContainer");
@@ -23,13 +23,27 @@ newTaskButton.addEventListener("click", () => {
    form.style.opacity = 1;
 });
 
-document.querySelector("#taskSaveButton").addEventListener("click", (e) => {
-   const container = document.querySelector("#main-container");
-   let formObj = grabFormData();
-   let taskObj = new createTask(formObj);
-   saveToLocalStorage(taskObj, container);
-   console.log(taskObj);
-   e.preventDefault();
+document.getElementById('newTaskForm').addEventListener("submit", (e) => {
+  const form = document.getElementById("newTaskForm");
+  const formContainer = document.getElementById("formContainer");
+  let isFormValid = form.checkValidity();
+  if (!isFormValid) {
+    form.reportValidity();
+  } else {
+    const container = document.querySelector("#main-container");
+    let formObj = grabFormData();
+    let taskObj = new createTask(formObj);
+    saveToLocalStorage(taskObj, container);
+    console.log(taskObj);
+  }
+  e.preventDefault();
+
+  formContainer.style.visibility = 'hidden';
+  formContainer.style.transition = 'all 0s';
+  form.reset();
+
+  
+   
 });
 
 //Add Priority Select Behavior
@@ -38,13 +52,13 @@ console.log(allButtons);
 allButtons.forEach((element) => {
    element.addEventListener("click", (e) => {
       allButtons.forEach((element) => {
-         element.classList.remove("button-active");
+         element.classList.remove("priority-active");
       });
-      e.target.classList.add("button-active");
+      e.target.classList.add("priority-active");
    });
 });
 
-//Add Priority Select Behavior
+//Add Project Select Behavior
 const allProjects = [...document.querySelectorAll("div.project-button")];
 console.log(allProjects);
 allProjects.forEach((element) => {

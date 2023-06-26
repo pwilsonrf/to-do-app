@@ -10,17 +10,27 @@
     --color8: #A459D1;
     --color9: #3795BD;
     --color10: #2F58CD;
-    --color11: #ffffff;
+    --color11: #ffffff;;
+    --color12: #9e9ea7;
+    --color13: #2f2f2f;
+    --color14: #FFE162;
+    --color15: #FF6464;
+    --color16: #91C483;
+    --color17: #000000;
+
     --font-color: #454545;
     --font-family: :system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     --p-size: 14px;
-    --options-size: 16px;
+    --options-size: 12px;
     --taskTitle: 20px;
     --taskDescription: 14px;
     --taskDueDate: 14px;
     --taskPriority: 12px;
 }
 
+body{
+    background-color: var(--color17);
+}
 .middle-container{
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
@@ -138,6 +148,19 @@
     display: block;
 }
 
+
+.newTask{
+    display: flex;
+    flex: 0 1 1;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 10px;
+    background-color: var(--color13);
+    border: 1px solid var(--color12);
+    border-radius: 5px;
+    color: var(--color11);
+}
+
 .project-button, .priority-button{
     width: 70px;
     height: 20px;
@@ -150,63 +173,35 @@
     font-size: var(--options-size);
     border: 1px solid;
     border-radius: 5px;
-    color: var(--color5);
+    color: var(--color13);
 }
 
-.Personal-button{
-    background-color: var(--color6);
-    opacity: 0.3;
-    border-color: var(--color5);
-}
 
-.Home-button{
-    background-color: var(--color9);
-    opacity: 0.3;
-    border-color: var(--color5);
-}
-
-.Work-button{
-    background-color: var(--color7);
-    opacity: 0.3;
-    border-color: var(--color5);
-}
 
 .Normal-button{
-    background-color: var(--color10);
+    background-color: var(--color16);
     opacity: 0.3;
-    border-color: var(--color5);
+    border-color: var(--color12);
 }
 
 .High-button{
-    background-color: var(--color9);
+    background-color: var(--color15);
     opacity: 0.3;
-    border-color: var(--color5);
+    border-color: var(--color12);
 }
 
 .Low-button{
-    background-color: var(--color8);
+    background-color: var(--color14);
     opacity: 0.3;
-    border-color: var(--color5);
+    border-color: var(--color12);
 }
 
-.project-active, .button-active{
-    opacity: 1;
-}
+
 
 /* .task-item{
     display: block;
 } */
 
-.newTask{
-    display: flex;
-    height: 60px;
-    flex: 0 1 1;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: 5px;
-    background-color: var(--color2rgba);
-    border: 0.50px solid var(--color2);
-}
 /* 
 .renderChild{
     display: flex;
@@ -219,10 +214,11 @@
     vertical-align: top;
     flex: 1;
     margin: 0px;
+    gap: space-between;
 }
 
 #renderChild2{
-    margin-top: 0px;
+    margin-top: 10px;
     margin-bottom: 0px;
     display: flex;
     flex: 1;
@@ -231,24 +227,57 @@
 #renderChild3{
     display: flex;
     flex: 1 1 1;
-    height: 30px;
+    height: 20px;
+    margin-top: 0px;
+    align-items: bottom;
+    color: var(--color12);
 }
 
 
 #renderChild1Left{
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: top;
+    gap: 5px;
+    align-items: top;
+    justify-content: flex-start;
     vertical-align: top;
 } 
 
-#renderChild1Left > h2{
+#renderChild1Right{
+    display: flex;
+    margin-left: auto;
+    align-items: top;
+}
+
+.taskDueDateContainer{
+    background-color: var(--color5);
+    height: 20px;
+    width: 50px;
+    padding: 0px 5px 0px 5px;
+    flex-direction: column;
+    display: flex;
+    border: 1px solid var(--color11);
+    border-radius: 20px;
+    justify-content: center;
+
+}
+
+
+
+
+#renderChild3Left{
+    display: flex;
+    justify-content: flex-start;
+    gap: 5px;
+}
+
+#renderChild2 > h2{
     text-align: start;
     margin-top: 0px;
     margin-bottom: 0px;
     padding-bottom: 5px;
 }
+
+
 
 /* #renderChild1Right{
     display: flex;
@@ -273,36 +302,42 @@
 .taskPriorityContainer{
     height: 20px;
     width: 50px;
-    padding: 0px 2px 0px 2px;
+    padding: 0px 5px 0px 5px;
     border: 1px solid var(--color2);
-    border-radius: 5px;
+    border-radius: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
+    opacity: 1;
+    color: var(--color13);
+    font-weight: bold;
+    font-family: var(--font-family);
 }
 
 .taskProjectContainer{
     height: 20px;
     width: 50px;
-    padding: 0px 2px 0px 2px;
+    padding: 0px 5px 0px 5px;
     border: 1px solid var(--color2);
-    border-radius: 5px;
+    border-radius: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: var(--color13);
+    font-weight: bold;
+    font-family: var(--font-family);
 }
 
-.task-item{
-    font-family: var(--font-family);
-    color: var(--font-color);
-}
+
 
 .taskTitle{
     font-size: var(--taskTitle);
 }
 
 .taskDueDate{
-    font-size: var(--taskDueDate);
+    margin: 0px;
+    font-family: var(--font-family);
+    font-size: var(--options-size);
 }
 
 .taskDescription{
@@ -312,10 +347,47 @@
     padding-bottom: 5px;
 }
 
+/* Priority Buttons Active on each Task Container*/
 .taskPriority{
     font-size: var(--taskPriority);
     display: flex;
     gap: 10px;
+    background-color: none;
+
+}
+
+.Normal-button-active{
+    border-color: var(--color16);
+    background-color: var(--color16);
+}
+
+.High-button-active{
+    border-color: var(--color15);
+    background-color: var(--color15);
+}
+
+.Low-button-active{
+    border-color: var(--color14);
+    background-color: var(--color14);
+}
+
+/*Project Buttons Active on each Task Container*/
+.Personal-button{
+    background-color: var(--color6);
+    opacity: 0.3;
+    border-color: var(--color12);
+}
+
+.Home-button{
+    background-color: var(--color9);
+    opacity: 0.3;
+    border-color: var(--color12);
+}
+
+.Work-button{
+    background-color: var(--color7);
+    opacity: 0.3;
+    border-color: var(--color12);
 }
 
 .taskProject{
@@ -324,3 +396,21 @@
     gap: 10px;
 }
 
+.Personal-button-active{
+    border-color: var(--color6);
+    background-color: var(--color6);
+}
+
+.Work-button-active{
+    border-color: var(--color7);
+    background-color: var(--color7);
+}
+
+.Home-button-active{
+    border-color: var(--color9);
+    background-color: var(--color9);
+}
+
+.project-active, .priority-active{
+    opacity: 1;
+}

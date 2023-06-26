@@ -71,7 +71,7 @@ export function addFormField(fieldType, attributes, text, parent){
         ['Normal', 'High', 'Low'].forEach(each => {
             let opt = createElement('div', `priority-button ${each}-button`);
             if(each == 'Normal'){
-                opt.classList.add('button-active');
+                opt.classList.add('priority-active');
             }
             opt.innerText = each;
             newField.appendChild(opt);
@@ -115,17 +115,18 @@ export function saveToLocalStorage(obj, container){
     renderTaskOnDatabase(obj, container);
 }
     
+/*
+Create a Task Object to be used for rendering and adding to database
+Args:
+    - Data in form of an object grabbed from Form Submission
+*/
 export function createTask(obj){
     this.title = obj.title;
     this.description = obj.description;
     this.assignedProject = obj.project;
     this.dueDate = obj.dueDate;
     this.priority = obj.priority;
-    // this.dateCreated = dateCreated;
     this.uniqueID = uuidv4();
-    // this.status = 'Not Started';
-    // this.dateModified = "";
-    // this.childrenID = {};
 }
 
 /*
@@ -141,12 +142,12 @@ export function renderTaskOnDatabase(obj, container){
     const renderChild3 = createElement('div', 'renderChild', 'renderChild3', '', renderContainer);
     const renderChild1Left = createElement('div', '', 'renderChild1Left','',renderChild1);
     const renderChild1Right = createElement('div', '', 'renderChild1Right','',renderChild1);
-    const renderChild3Left = createElement('div', '', 'renderChild1Left','',renderChild3);
-    const renderChild3Right = createElement('div', '', 'renderChild1Right','',renderChild3);
+    const renderChild3Left = createElement('div', '', 'renderChild3Left','',renderChild3);
+    const renderChild3Right = createElement('div', '', 'renderChild3Right','',renderChild3);
     
-    createElement('h2', "taskTitle task-item", '', `${obj.title}`, renderChild1Left);
+    createElement('h2', "taskTitle task-item", '', `${obj.title}`, renderChild2);
     if (obj.description){
-        const descriptionCont = createElement('div', 'taskDescriptionContainer', '', '', renderChild2);
+        const descriptionCont = createElement('div', 'taskDescriptionContainer', '', '', renderChild3);
         createElement('p', "taskDescription task-item", '', `${obj.description}`, descriptionCont);
     }
 
@@ -155,13 +156,16 @@ export function renderTaskOnDatabase(obj, container){
         createElement('p', "taskDueDate task-item", '', `${obj.dueDate}`, dueDateCont);
 
     }
-    if (obj.priority){
-        const priorityCont = createElement('div', 'taskPriorityContainer', '', '', renderChild3Left);
-        createElement('p', "taskPriority task-item", '', `${obj.priority}`, priorityCont);
+    if (obj.assignedProject){
+        const projectCont = createElement('div', `taskProjectContainer ${obj.assignedProject}-button-active`, '', '', renderChild1Left);
+        createElement('p', "taskProject task-item", '', `${obj.assignedProject}`, projectCont);
+        console.log(obj.project);
     }
-    if (obj.project){
-        const projectCont = createElement('div', 'taskProjectContainer', '', '', renderChild3Left);
-        createElement('p', "taskProject task-item", '', `${obj.project}`, projectCont);
+    
+    if (obj.priority){
+        const priorityCont = createElement('div', `taskPriorityContainer ${obj.priority}-button-active`, '', '', renderChild1Left);
+        createElement('p', "taskPriority task-item", '', `${obj.priority}`, priorityCont);
+        console.log(obj.priority);
     }
     appendAChild(container, renderContainer);
 }

@@ -16,18 +16,13 @@ export function newTaskDialog(){
     addFormField('label', {class: 'taskLabel', for: 'taskTitle'}, 'Title', titleContainer);
 
     //Create an input element for Title
-    addFormField('input', {class: 'taskInput', type: 'text', value: 'Untitled',
-    name: 'taskTitle', placeholder: 'Enter task...', id: 'taskTitle'}, '', titleContainer);
-
-    //Create an input element for Description
-    const descriptionContainer = addFormField('div', {class: 'innerContainer'}, '', newTaskForm);
     addFormField('input', {class: 'taskInput', type: 'text',
-    name: 'taskDescription', placeholder: 'Add description', id: 'taskDescription', value: ''}, '', descriptionContainer);
+    name: 'taskTitle', placeholder: 'Enter task...', id: 'taskTitle', required: true}, '', titleContainer);
 
-     //Create Task Details container
-     const taskDetailsContainer = addFormField('div', {class: 'innerContainer', id: 'taskDetailsContainer'}, '', newTaskForm);
-     addFormField('label', {class: 'taskLabel', for: 'taskDetails'}, 'Task Details', taskDetailsContainer);
- 
+    //Create Task Details container
+    const taskDetailsContainer = addFormField('div', {class: 'innerContainer', id: 'taskDetailsContainer'}, '', newTaskForm);
+    addFormField('label', {class: 'taskLabel', for: 'taskDetails'}, 'Task Details', taskDetailsContainer);
+
     //Create label for Due Date
     const dueDateContainer = addFormField('div', {class: 'innerContainer'}, '', taskDetailsContainer);
     addFormField('label', {class: 'taskLabel', for: 'taskDescription'}, 'Due Date', dueDateContainer);
@@ -44,23 +39,22 @@ export function newTaskDialog(){
     addFormField('div', {class: 'taskInput taskProject',
     name: 'taskProject', id: 'taskProject'}, '', projectContainer);
 
-    
-
-     //Create label for Priority
-     const priorityContainer = addFormField('div', {class: 'innerContainer', id: 'priorityContainer', value: ''}, '', taskDetailsContainer);
-     addFormField('label', {class: 'taskLabel', for: 'taskPriority'}, 'Priority', priorityContainer);
+    //Create label for Priority
+    const priorityContainer = addFormField('div', {class: 'innerContainer', id: 'priorityContainer', value: ''}, '', taskDetailsContainer);
+    addFormField('label', {class: 'taskLabel', for: 'taskPriority'}, 'Priority', priorityContainer);
  
     //Create a select element for Priority
     addFormField('div', {class: 'taskInput taskPriority',
     name: 'taskPriority', id: 'taskPriority'}, '', priorityContainer);
 
-    
+    //Create an input element for Description
+    const descriptionContainer = addFormField('div', {class: 'innerContainer'}, '', taskDetailsContainer);
+    addFormField('input', {class: 'taskInput', type: 'text',
+    name: 'taskDescription', placeholder: 'Add description', id: 'taskDescription', value: ''}, '', descriptionContainer);
+
     //Create an submit element to save Task
     addFormField('input', {class: 'taskInput', type: 'submit',
     name: 'taskSaveButton', id: 'taskSaveButton'}, 'Create task', newTaskForm);
-
-   
-    
 
     appendAChild(formContainer, newTaskForm);
     appendAChild(body, formContainer);
