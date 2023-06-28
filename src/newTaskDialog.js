@@ -59,6 +59,8 @@ export function newTaskDialog(){
     appendAChild(formContainer, newTaskForm);
     appendAChild(body, formContainer);
 
+    return newTaskForm
+
     
 
 

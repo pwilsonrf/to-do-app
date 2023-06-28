@@ -148,7 +148,6 @@ body{
     display: block;
 }
 
-
 .newTask{
     display: flex;
     flex: 0 1 1;
@@ -159,6 +158,7 @@ body{
     border: 1px solid var(--color12);
     border-radius: 5px;
     color: var(--color11);
+    box-sizing: border-box;
 }
 
 .project-button, .priority-button{
@@ -227,7 +227,6 @@ body{
 #renderChild3{
     display: flex;
     flex: 1 1 1;
-    height: 20px;
     margin-top: 0px;
     align-items: bottom;
     color: var(--color12);
@@ -258,6 +257,7 @@ body{
     border: 1px solid var(--color11);
     border-radius: 20px;
     justify-content: center;
+    align-items: center;
 
 }
 
@@ -268,6 +268,13 @@ body{
     display: flex;
     justify-content: flex-start;
     gap: 5px;
+}
+
+#renderChild3Right{
+    display: flex;
+    justify-content: flex-end;
+    margin-left: auto;
+    gap: 20px;
 }
 
 #renderChild2 > h2{
@@ -328,10 +335,9 @@ body{
     font-family: var(--font-family);
 }
 
-
-
 .taskTitle{
     font-size: var(--taskTitle);
+    word-break: break-all;
 }
 
 .taskDueDate{
@@ -345,6 +351,7 @@ body{
     margin-top: 0px;
     margin-bottom: 0px;
     padding-bottom: 5px;
+    word-break: break-all;
 }
 
 /* Priority Buttons Active on each Task Container*/
@@ -414,3 +421,4 @@ body{
 .project-active, .priority-active{
     opacity: 1;
 }
+

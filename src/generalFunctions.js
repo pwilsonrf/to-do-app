@@ -1,4 +1,6 @@
 import { v4 as uuidv4} from 'uuid';
+import { compareAsc, format, parseISO, isSameWeek} from 'date-fns';
+import { tasksArray } from '.';
 /*
 Create element and append to DOM
 Args:
@@ -22,6 +24,10 @@ export function createElement(element, className = "#", id = "#", text = "", par
 
     if(element === 'a' && source){
         newElement.href = source;
+    }
+
+    if(element === 'img' && source){
+        newElement.src = source;
     }
     return newElement;
 }
@@ -107,13 +113,30 @@ export function grabFormData(){
         description: document.getElementById('taskDescription').value,
     }
     console.log(taskObject);
-    return taskObject;
+    return taskObject
 }
 
-export function saveToLocalStorage(obj, container){
-    localStorage.setItem(obj.uniqueID, JSON.stringify(obj));
-    renderTaskOnDatabase(obj, container);
+/*
+Saves new task object to current array of tasks on LocalStorage and renders tasks to task container
+Args: 
+    -Newly created task object
+*/
+export function saveToLocalStorage(obj){
+    const tasksArray = JSON.parse(localStorage.getItem("tasksArray"));
+    obj.counter = tasksArray.length + 1;
+    tasksArray.push([obj.counter, obj]);
+    console.log(tasksArray);
+    localStorage.setItem("tasksArray", JSON.stringify(tasksArray));
+    renderTasks(tasksArray)
 }
+
+export function renderTasks(objArray){
+    const container = document.querySelector("#main-container");
+    container.innerHTML = '';
+    objArray.forEach(task => renderTaskOnDatabase(task[1], container));
+}
+
+
     
 /*
 Create a Task Object to be used for rendering and adding to database
@@ -147,13 +170,15 @@ export function renderTaskOnDatabase(obj, container){
     
     createElement('h2', "taskTitle task-item", '', `${obj.title}`, renderChild2);
     if (obj.description){
-        const descriptionCont = createElement('div', 'taskDescriptionContainer', '', '', renderChild3);
+        const descriptionCont = createElement('div', 'taskDescriptionContainer', '', '', renderChild3Left);
         createElement('p', "taskDescription task-item", '', `${obj.description}`, descriptionCont);
     }
 
     if (obj.dueDate){
+        // let dueDate = obj.dueDate.split('-').toS;
+        let date = format( parseISO(obj.dueDate), 'EEEE');
         const dueDateCont = createElement('div', 'taskDueDateContainer', '', '', renderChild1Right);
-        createElement('p', "taskDueDate task-item", '', `${obj.dueDate}`, dueDateCont);
+        createElement('p', "taskDueDate task-item", '', `${date}`, dueDateCont);
 
     }
     if (obj.assignedProject){
@@ -167,7 +192,56 @@ export function renderTaskOnDatabase(obj, container){
         createElement('p', "taskPriority task-item", '', `${obj.priority}`, priorityCont);
         console.log(obj.priority);
     }
+
+    const img = createElement('img', "newTaskIcon", "complete-task-before", '', renderChild3Right, '../src/img/complete-task-before.svg');
+    img.addEventListener("click", (e) => {
+        if(img.id === 'complete-task-before'){
+            console.log('this works')
+            img.src = '../src/img/complete-task-after.svg';
+            img.removeAttribute('id');
+            img.setAttribute("id", 'complete-task-after');
+        } else {
+            img.setAttribute("src", '../src/img/complete-task-before.svg');
+            img.removeAttribute('id');
+            img.setAttribute("id", 'complete-task-before');
+        }
+    });
     appendAChild(container, renderContainer);
+
+
+
+    // renderContainer.addEventListener("click", (e) => {
+    //     console.log(e.target);
+    //   });
+    // renderTasks()
+}
+
+// export function editTask(obj){
+//     const form = newTaskDialog();
+//     console.log('does this')
+//     form.getElementById('taskTitle').value = obj.title;
+//     return form
+// }
+
+
+export function changePriority(obj, newPriority){
+    obj.priority = newPriority;
+}
+
+export function changeProject(obj, newProject){
+    obj.assignedProject = newProject;
+}
+
+export function changeDueDate(obj, newDueDate){
+    obj.dueDate = newDueDate;
+}
+
+export function changeTitle(obj, newTitle){
+    obj.title = newTitle;
+}
+
+export function changeDescription(obj, newDescription){
+    obj.description = newDescription;
 }
 
 
