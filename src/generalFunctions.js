@@ -127,14 +127,14 @@ export function saveToLocalStorage(obj){
     tasksArray.push([obj.counter, obj]);
     console.log(tasksArray);
     localStorage.setItem("tasksArray", JSON.stringify(tasksArray));
-    renderTasks(tasksArray)
+    // renderTasks(tasksArray)
 }
 
-export function renderTasks(objArray){
-    const container = document.querySelector("#main-container");
-    container.innerHTML = '';
-    objArray.forEach(task => renderTaskOnDatabase(task[1], container));
-}
+// export function renderTasks(objArray){
+//     const container = document.querySelector("#personal-task-container");
+//     container.innerHTML = '';
+//     objArray.forEach(task => renderTaskOnDatabase(task[1], container));
+// }
 
 
     

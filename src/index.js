@@ -5,17 +5,20 @@ import {
    saveFormData,
    grabFormData,
    saveToLocalStorage,
-   renderTasks,
+   appendAChild
 } from "./generalFunctions.js";
 
 import { compareAsc, format} from 'date-fns';
 // import {appendAChild } from './generalFunctions.js';
 import { newTaskDialog } from "./newTaskDialog.js";
+import { renderTaskContainer } from "./dashboard";
+import { clearAllTasks, renderTasks } from "./renderTasks";
 
 const header = document.querySelector(".header");
 const newTaskButton = createElement("button", "newTask-button", "", "New Task");
 export const tasksArray = []; //Array of tasks
-localStorage.setItem("tasksArray", JSON.stringify(tasksArray));
+// localStorage.setItem("tasksArray", JSON.stringify(tasksArray));
+renderTaskContainer()
 
 // console.log(newTaskButton);
 header.appendChild(newTaskButton);
@@ -61,7 +64,8 @@ document.getElementById('newTaskForm').addEventListener("submit", (e) => {
     let taskObj = new createTask(formObj);
     console.log('this is working')
     saveToLocalStorage(taskObj);
-    console.log(taskObj);
+    clearAllTasks()
+    renderTasks()
   }
   e.preventDefault();
 
@@ -105,7 +109,6 @@ allProjects.forEach((element) => {
    });
 });
 
-
-
+renderTasks()
 
 

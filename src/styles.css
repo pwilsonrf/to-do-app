@@ -17,7 +17,6 @@
     --color15: #FF6464;
     --color16: #91C483;
     --color17: #000000;
-
     --font-color: #454545;
     --font-family: :system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     --p-size: 14px;
@@ -29,11 +28,11 @@
 }
 
 body{
-    background-color: var(--color17);
+    background-color: var(--colo47);
 }
 .middle-container{
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 1fr 4fr;
     grid-template-rows: 1fr;
 }
 
@@ -41,10 +40,63 @@ body{
     /* width: 400px; */
     grid-column: 2/3;
     height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    flex-direction: column;
+    gap: 10px;
+    grid-auto-flow: column;
+}
+
+.main-column{
+    gap: 5px;
+    padding: 5px;
     display: flex;
     flex-direction: column;
-    gap: 5px;
 }
+#personal-tasks{
+    
+}
+
+
+
+.task-container-header{
+    padding: 2.5px;
+    border: 1px solid var(--color10);
+    border-radius: 5px;
+    display: flex;
+    flex: 0 1 auto;
+    justify-content: left;
+    align-items: center;
+}
+
+.task-container{
+    /* padding: 10px; */
+    border: 1px solid var(--color10);
+    /* border-radius: 5px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+.personal-tasks-header{
+    background-color: var(--color9);
+}
+
+.work-tasks-header{
+    background-color: var(--color2);
+}
+
+.home-tasks-header{
+    background-color: var(--color14);
+
+}
+
+.reminder-tasks-header{
+    background-color: var(--color15);
+
+}
+
 
 .header{
     height: 80px;
@@ -159,6 +211,7 @@ body{
     border-radius: 5px;
     color: var(--color11);
     box-sizing: border-box;
+    margin: 2.5px 5px 2.5px 5px;
 }
 
 .project-button, .priority-button{
@@ -421,4 +474,5 @@ body{
 .project-active, .priority-active{
     opacity: 1;
 }
+
 
