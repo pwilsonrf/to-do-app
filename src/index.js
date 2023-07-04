@@ -18,7 +18,9 @@ const header = document.querySelector(".header");
 const newTaskButton = createElement("button", "newTask-button", "", "New Task");
 export const tasksArray = []; //Array of tasks
 // localStorage.setItem("tasksArray", JSON.stringify(tasksArray));
+
 renderTaskContainer()
+renderTasks()
 
 // console.log(newTaskButton);
 header.appendChild(newTaskButton);
@@ -76,7 +78,7 @@ document.getElementById('newTaskForm').addEventListener("submit", (e) => {
 });
 
 // function setPriorityDefault(){
-//   const previousActivePriority = document.querySelector("div.priority-active");
+//   const previousActivePriority = document.quySelector("div.priority-active");
 //   previousActivePriority.remove("priority-active");
 //   // allButtons.forEach((element) => {
 //   //   element.remove("priority-active");
@@ -109,6 +111,6 @@ allProjects.forEach((element) => {
    });
 });
 
-renderTasks()
+
 
 

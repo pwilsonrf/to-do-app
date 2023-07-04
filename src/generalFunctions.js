@@ -85,7 +85,7 @@ export function addFormField(fieldType, attributes, text, parent){
     }
 
     if(newField.id === 'taskProject'){
-        ['Personal', 'Work', 'Home'].forEach(each => {
+        ['Personal', 'Work', 'Home', "Reminders"].forEach(each => {
             let opt = createElement('div', `project-button ${each}-button`, );
             if(each == 'Personal'){
                 opt.classList.add('project-active');
