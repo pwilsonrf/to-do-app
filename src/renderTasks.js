@@ -1,36 +1,34 @@
-import { renderTaskOnDatabase } from './generalFunctions';
+import { renderTaskOnDatabase, createElement } from './generalFunctions';
 
-export function renderTasks(){
+/*
+Render tasks on container of tasks
+*/
+export function renderTasks() {
     var ls = require('local-storage');
     const tasksArray = ls.get('tasksArray');
     tasksArray.forEach(task =>{
-        if(task[1].assignedProject === 'Personal'){
+        if (task[1].assignedProject === 'Personal') {
             let container = document.querySelector('#personal-tasks-container');
-            renderTaskOnDatabase(task[1], container)
-        } else if(task[1].assignedProject === 'Work'){
+            renderTaskOnDatabase(task[1], task[0], container)
+        } else if (task[1].assignedProject === 'Work') {
             let container = document.querySelector('#work-tasks-container');
-            renderTaskOnDatabase(task[1], container)
-        } else if(task[1].assignedProject === 'Home'){
+            renderTaskOnDatabase(task[1], task[0], container)
+        } else if (task[1].assignedProject === 'Home') {
             let container = document.querySelector('#home-tasks-container');
-            renderTaskOnDatabase(task[1], container)
-        } else if(task[1].assignedProject === 'Reminders'){
+            renderTaskOnDatabase(task[1], task[0], container)
+        } else if (task[1].assignedProject === 'Reminders') {
             let container = document.querySelector('#reminders-tasks-container');
-            renderTaskOnDatabase(task[1], container)
+            renderTaskOnDatabase(task[1], task[0], container)
         }
     })
 }
 
-
-export function clearAllTasks(){
-    const container1 = document.querySelector("#personal-task-container");
-    container.innerHTML = '';
-
-    const container2 = document.querySelector("#home-task-container");
-    container.innerHTML = '';
-
-    const container3 = document.querySelector("#work-task-container");
-    container.innerHTML = '';
-
-    const container4 = document.querySelector("#reminders-task-container");
-    container.innerHTML = '';
+/*
+Clear all tasks from container of tasks
+*/
+export function clearAllTasks() {
+    document.querySelector("#personal-task-container").innerHTML = '';
+    document.querySelector("#home-task-container").innerHTML = '';
+    document.querySelector("#work-task-container").innerHTML = '';
+    document.querySelector("#reminders-task-container").innerHTML = '';
 }

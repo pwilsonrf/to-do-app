@@ -1,13 +1,12 @@
 import { appendAChild, createElement, addFormField, saveFormData} from "./generalFunctions";
 
-export function newTaskDialog(){
+/*
+New task form pop up
+*/
+export function newTaskDialog() {
     const body = document.querySelector('body');
-
-    //Form Container
     const formContainer = createElement('div','formContainer', 'formContainer');
-
-    //Create newTaskForm container
-    const newTaskForm = addFormField('form', {action: '', id: 'newTaskForm'}, '', formContainer)
+    const newTaskForm = addFormField('form', {action: '', id: 'newTaskForm'}, '', formContainer);
     const newTaskHeader = createElement('h2', 'heading2', 'NewTaskHeading', 'Create a new task');
     appendAChild(newTaskForm, newTaskHeader);
 
@@ -55,16 +54,9 @@ export function newTaskDialog(){
     //Create an submit element to save Task
     addFormField('input', {class: 'taskInput', type: 'submit',
     name: 'taskSaveButton', id: 'taskSaveButton'}, 'Create task', newTaskForm);
-
     appendAChild(formContainer, newTaskForm);
     appendAChild(body, formContainer);
-
-    return newTaskForm
-
-    
-
-
-
+    return newTaskForm;
 }
 
 

@@ -1,5 +1,8 @@
 import { appendAChild, createElement } from "./generalFunctions"
 
+/*
+Render all tasks on container
+*/
 export function renderTaskContainer(){
     appendAChild(document.querySelector('#main-container'), createElement('div', 'main-column1 main-column', 'personal-tasks'))
     appendAChild(document.querySelector('#main-container'), createElement('div', 'main-column2 main-column', 'work-tasks'))
@@ -19,7 +22,7 @@ export function renderTaskContainer(){
     appendAChild(document.querySelector('.main-column4'), createElement('div', 'task-container', 'reminders-tasks-container'))
 
     //Add New Task Buttons at the end of each column
-    for (let i = 1; i<4; i++){
+    for (let i = 1; i<=4; i++){
         let newTaskButton = createElement("button", "newTask-button", "", "");
         createElement('img', "addNewTask-icon", '', '', newTaskButton, '../src/img/add.svg')
         newTaskButton.addEventListener("click", () => {
@@ -27,7 +30,6 @@ export function renderTaskContainer(){
             form.style.visibility = "visible";
             form.style.opacity = 1;
          })
-         console.log(i)
          appendAChild(document.querySelector(`.main-column${i}`), newTaskButton);
     }
 }
