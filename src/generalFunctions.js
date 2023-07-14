@@ -100,7 +100,7 @@ Args:
     -obj(obj): Newly created task object
 */
 export function saveToLocalStorage(obj) {
-    const tasksArray = JSON.parse(localStorage.getItem("tasksArray"));
+    const tasksArray = JSON.parse(localStorage.getItem("tasksArray")) ?? [];
     obj.counter = tasksArray.length + 1;
     tasksArray.push([obj.counter, obj]);
     localStorage.setItem("tasksArray", JSON.stringify(tasksArray));
@@ -110,12 +110,14 @@ export function saveToLocalStorage(obj) {
 Create a Task Object to be used for rendering and adding to database
 */
 export function createTask() {
-    this.title = document.getElementById('taskTitle').value;
-    this.description = document.getElementById('taskDescription').value;
-    this.assignedProject = document.getElementsByClassName('project-active')[0].innerText;
-    this.dueDate = document.getElementById('taskDueDate').value;
-    this.priority = document.getElementsByClassName('priority-active')[0].innerText;
-    this.uniqueID = uuidv4();
+    const obj = {};
+    obj.title = document.getElementById('taskTitle').value;
+    obj.description = document.getElementById('taskDescription').value;
+    obj.assignedProject = document.getElementsByClassName('project-active')[0].innerText;
+    obj.dueDate = document.getElementById('taskDueDate').value;
+    obj.priority = document.getElementsByClassName('priority-active')[0].innerText;
+    obj.uniqueID = uuidv4();
+    return obj;
 }
 
 /*
@@ -141,7 +143,7 @@ export function renderTaskOnDatabase(obj, objNum, container) {
     }
 
     if (obj.dueDate) {
-        let date = format( parseISO(obj.dueDate), 'EEEE');
+        let date = format(parseISO(obj.dueDate), 'EEEE');
         const dueDateCont = createElement('div', 'taskDueDateContainer', '', '', renderChild1Right);
         createElement('p', "taskDueDate task-item", '', `${date}`, dueDateCont);
 
@@ -149,13 +151,11 @@ export function renderTaskOnDatabase(obj, objNum, container) {
     if (obj.assignedProject) {
         const projectCont = createElement('div', `taskProjectContainer ${obj.assignedProject}-button-active`, '', '', renderChild1Left);
         createElement('p', "taskProject task-item", '', `${obj.assignedProject}`, projectCont);
-        console.log(obj.project);
     }
     
     if (obj.priority) {
         const priorityCont = createElement('div', `taskPriorityContainer ${obj.priority}-button-active`, '', '', renderChild1Left);
         createElement('p', "taskPriority task-item", '', `${obj.priority}`, priorityCont);
-        console.log(obj.priority);
     }
 
     const img = createElement('img', "newTaskIcon", "complete-task-before", '', renderChild3Right, '../src/img/complete-task-before.svg');
@@ -185,12 +185,12 @@ export function editTask(obj) {
     formContainer.style.visibility = "visible";
     formContainer.style.opacity = 1;
     
-        // form.getElementById('taskTitle').value = obj.title;
-        form.getElementById('taskDueDate').value = obj.dueDate;
-        form.getElementById('taskProject').value = obj.assignedProject;
-        form.getElementById('askPriority').value = obj.priority;
-        form.getElementById('taskDescription').value = obj.description;
-        form.getElementById('taskTitle');
+        
+        document.getElementById('taskDueDate').value = obj.dueDate;
+        document.getElementById('taskProject').value = obj.assignedProject;
+        document.getElementById('taskPriority').value = obj.priority;
+        document.getElementById('taskDescription').value = obj.description;
+        document.getElementById('taskTitle').value = obj.title;
 
         // formContainer.style.visibility = 'visible';
         // formContainer.style.transition = 'all 0s';

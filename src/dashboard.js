@@ -27,6 +27,7 @@ export function renderTaskContainer(){
         createElement('img', "addNewTask-icon", '', '', newTaskButton, '../src/img/add.svg')
         newTaskButton.addEventListener("click", () => {
             const form = document.getElementById("formContainer");
+            document.getElementById('NewTaskHeading').innerText = 'Create new task';
             form.style.visibility = "visible";
             form.style.opacity = 1;
          })

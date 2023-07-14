@@ -4,8 +4,7 @@ import { renderTaskOnDatabase, createElement } from './generalFunctions';
 Render tasks on container of tasks
 */
 export function renderTasks() {
-    var ls = require('local-storage');
-    const tasksArray = ls.get('tasksArray');
+    const tasksArray = JSON.parse(localStorage.getItem('tasksArray')) ?? [];
     tasksArray.forEach(task =>{
         if (task[1].assignedProject === 'Personal') {
             let container = document.querySelector('#personal-tasks-container');
@@ -27,8 +26,8 @@ export function renderTasks() {
 Clear all tasks from container of tasks
 */
 export function clearAllTasks() {
-    document.querySelector("#personal-task-container").innerHTML = '';
-    document.querySelector("#home-task-container").innerHTML = '';
-    document.querySelector("#work-task-container").innerHTML = '';
-    document.querySelector("#reminders-task-container").innerHTML = '';
+    document.querySelector("#personal-tasks-container").innerHTML = '';
+    document.querySelector("#home-tasks-container").innerHTML = '';
+    document.querySelector("#work-tasks-container").innerHTML = '';
+    document.querySelector("#reminders-tasks-container").innerHTML = '';
 }
