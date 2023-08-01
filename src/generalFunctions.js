@@ -1,4 +1,8 @@
 import { v4 as uuidv4} from 'uuid';
+import {
+    saveTask,
+    modifyTask
+} from './index.js'
 import { newTaskDialog } from './newTaskDialog';
 import { 
     compareAsc,
@@ -86,7 +90,6 @@ export function addFormField(fieldType, attributes, text, parent) {
             newField.appendChild(opt);
         });
     }
-
     if (text) {
         newField.innerText = text;
     }
@@ -103,6 +106,17 @@ export function saveToLocalStorage(obj) {
     const tasksArray = JSON.parse(localStorage.getItem("tasksArray")) ?? [];
     obj.counter = tasksArray.length + 1;
     tasksArray.push([obj.counter, obj]);
+    localStorage.setItem("tasksArray", JSON.stringify(tasksArray));
+}
+
+/*
+Updates task object to current array of tasks on LocalStorage and renders tasks to task container
+Args: 
+    -obj(obj): Newly updated task object
+*/
+export function updateToLocalStorage(obj, objNum) {
+    const tasksArray = JSON.parse(localStorage.getItem("tasksArray")) ?? [];
+    tasksArray[objNum][1] = obj;
     localStorage.setItem("tasksArray", JSON.stringify(tasksArray));
 }
     
@@ -161,7 +175,6 @@ export function renderTaskOnDatabase(obj, objNum, container) {
     const img = createElement('img', "newTaskIcon", "complete-task-before", '', renderChild3Right, '../src/img/complete-task-before.svg');
     img.addEventListener("click", (e) => {
         if (img.id === 'complete-task-before') {
-            console.log('this works')
             img.src = '../src/img/complete-task-after.svg';
             img.removeAttribute('id');
             img.setAttribute("id", 'complete-task-after');
@@ -177,50 +190,61 @@ export function renderTaskOnDatabase(obj, objNum, container) {
 }
 
 export function editTask(obj) {
-    // const form = document.getElementById("newTaskForm");
-    // const formContainer = document.getElementById("formContainer");
-
     const form = document.getElementById("newTaskForm");
     const formContainer = document.getElementById("formContainer");
     formContainer.style.visibility = "visible";
     formContainer.style.opacity = 1;
-    
-        
-        document.getElementById('taskDueDate').value = obj.dueDate;
-        document.getElementById('taskProject').value = obj.assignedProject;
-        document.getElementById('taskPriority').value = obj.priority;
-        document.getElementById('taskDescription').value = obj.description;
-        document.getElementById('taskTitle').value = obj.title;
-
-        // formContainer.style.visibility = 'visible';
-        // formContainer.style.transition = 'all 0s';
-        
-    // }
-    // form.preventDefault();
-    // form.reset();
-    
+    document.getElementById('taskDueDate').value = obj[1].dueDate;
+    document.getElementById('taskProject').value = obj[1].assignedProject;
+    document.getElementById('taskPriority').value = obj[1].priority;
+    document.getElementById('taskDescription').value = obj[1].description;
+    document.getElementById('taskTitle').value = obj[1].title;
     return form;
 }
 
-// export function changePriority(obj, newPriority) {
-//     obj.priority = newPriority;
-// }
+//Test
+/*
+Add event listener to edit buttons included on each task
+*/
+export function addEventListenerToEditButtons (){
+    const editButtons = document.querySelectorAll('.editTask-button');
+    editButtons.forEach(each => each.addEventListener("click", (e) => {
+    const form = document.getElementById("newTaskForm");
+    const formContainer = document.getElementById("formContainer");
+    formContainer.style.visibility = "visible";
+    formContainer.style.opacity = 1;
+    let objNum = e.target.id.match(/\d+$/)[0] - 1;
+    objNum = objNum >= 0 ? objNum : 0;
+    const obj = JSON.parse(localStorage.getItem('tasksArray'))[objNum];
+    editTask(obj);
+    document.getElementById('NewTaskHeading').innerText = 'Edit task';
+    document.getElementById('taskSaveButton').value = 'Save task';
 
-// export function changeProject(obj, newProject) {
-//     obj.assignedProject = newProject;
-// }
+    //Placeholder code for rest of task info
+    // document.getElementById('taskDueDate').value = obj[1].dueDate;
+    // document.getElementById('taskProject').value = obj[1].assignedProject;
 
-// export function changeDueDate(obj, newDueDate) {
-//     obj.dueDate = newDueDate;
-// }
+    // //Change project active
+    // document.querySelector('.project-active').classList.remove('project-active');
+    // document.querySelector(`.${obj[1].assignedProject}-button`).classList.add('project-active');
 
-// export function changeTitle(obj, newTitle) {
-//     obj.title = newTitle;
-// }
+    // //Change priority active
+    // document.querySelector('.priority-active').classList.remove('priority-active');
+    // document.querySelector(`.${obj[1].priority}-button`).classList.add('priority-active');
 
-// export function changeDescription(obj, newDescription) {
-//     obj.description = newDescription;
-// }
+    // document.getElementById('taskDescription').value = obj[1].description;
+    // document.getElementById('taskTitle').value = obj[1].title;
 
+    //Overwrite the current task
+    document.getElementById('newTaskForm').addEventListener('submit', (e) => handleSubmitForm(e, objNum));
+    }));
+}
 
+export function handleSubmitForm(e, objNum = -1){
+    if(objNum ==-1) {
+        saveTask(e)
+    } else {
+        modifyTask(e, objNum)
+    }
+}
 

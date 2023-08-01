@@ -1,4 +1,8 @@
-import { appendAChild, createElement } from "./generalFunctions"
+import {
+    appendAChild,
+    createElement,
+    handleSubmitForm
+} from "./generalFunctions"
 
 /*
 Render all tasks on container
@@ -30,9 +34,13 @@ export function renderTaskContainer(){
             document.getElementById('NewTaskHeading').innerText = 'Create new task';
             form.style.visibility = "visible";
             form.style.opacity = 1;
-         })
-         appendAChild(document.querySelector(`.main-column${i}`), newTaskButton);
-    }
+             // //Save New Task
+            
+            
+            document.getElementById('newTaskForm').addEventListener("submit", (e)  => handleSubmitForm(e, -1));
+    });
+    appendAChild(document.querySelector(`.main-column${i}`), newTaskButton);     
+}
 }
 
 

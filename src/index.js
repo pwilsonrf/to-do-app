@@ -1,15 +1,16 @@
 import "./styles.css";
 import {
+   addEventListenerToEditButtons,
    createElement,
    createTask,
    editTask,
    grabFormData,
-   saveToLocalStorage
+   saveToLocalStorage,
+   updateToLocalStorage
 } from "./generalFunctions.js";
 import { newTaskDialog } from "./newTaskDialog.js";
 import { renderTaskContainer } from "./dashboard";
 import { clearAllTasks, renderTasks } from "./renderTasks";
-
 
 //Initial Set Up
 export const tasksArray = []; //Array of tasks
@@ -27,82 +28,49 @@ newTaskButton.addEventListener("click", () => {
    form.style.opacity = 1;
 });
 
-//Test
-const editButtons = document.querySelectorAll('.editTask-button');
-editButtons.forEach(each => each.addEventListener("click", (e) => {
+//Add event listener to all edit buttons (at startup)
+addEventListenerToEditButtons();
+
+/*
+Grab form data and update task object to local storage when an existing task is being edited
+Args:
+   - event target
+   - task number in TasksArray (in Local Storage)
+*/
+export function modifyTask(e, objNum) {
+   if (objNum == -1){
+      return
+   }
+   e.preventDefault();
    const form = document.getElementById("newTaskForm");
    const formContainer = document.getElementById("formContainer");
-   console.log(formContainer)
-   formContainer.style.visibility = "visible";
-   formContainer.style.opacity = 1;
-   console.log(document.getElementById("formContainer"));
-   let objNum = e.target.id.match(/\d+$/)[0] - 1;
-   objNum = objNum >= 0 ? objNum : 0;
-   console.log(objNum);
-   const obj = JSON.parse(localStorage.getItem('tasksArray'))[objNum];
-   console.log(obj);
-   editTask(obj[1]);
-
-   document.getElementById('NewTaskHeading').innerText = 'Edit task';
-   document.getElementById('taskSaveButton').value = 'Save task';
-
-   document.getElementById('taskDueDate').value = obj[1].dueDate;
-   document.getElementById('taskProject').value = obj[1].assignedProject;
-
-   //Change project active
-   document.querySelector('.project-active').classList.remove('project-active');
-   document.querySelector(`.${obj[1].assignedProject}-button`).classList.add('project-active');
-
-   //Change priority active
-   document.querySelector('.priority-active').classList.remove('priority-active');
-   document.querySelector(`.${obj[1].priority}-button`).classList.add('priority-active');
-
-   document.getElementById('taskDescription').value = obj[1].description;
-   document.getElementById('taskTitle').value = obj[1].title;
-
-   //Overwrite the current task
-   document.getElementById('newTaskForm').removeEventListener('submit', saveTask);
-   document.getElementById('newTaskForm').addEventListener('submit', );
-
-   
-
-   // Switch the submit button on the form to have a different title and to overwrite the current task
-
-
-}));
-
-function modifyTask(e) {
-   e.preventDefault();
-   console.log('run edit form')
    const taskObj = createTask();
-   JSON.parse(localStorage.getItem('tasksArray'))[objNum][1] = taskObj;
-   localStorage.setItem("tasksArray", JSON.stringify(tasksArray));
+   updateToLocalStorage(taskObj, objNum);
    clearAllTasks();
    renderTasks();
+   addEventListenerToEditButtons();
+   formContainer.style.visibility = 'hidden';
+   formContainer.style.transition = 'all 0s';
+   form.reset();
 }
-
-function saveTask(e) {
-e.preventDefault();
-  const form = document.getElementById("newTaskForm");
-  const formContainer = document.getElementById("formContainer");
-  let isFormValid = form.checkValidity();
-  if (!isFormValid) {
-    form.reportValidity();
-  } else {
-    const taskObj = createTask();
-    console.log(`Object has been created!, ${JSON.stringify(taskObj)}`);
-    saveToLocalStorage(taskObj);
-    clearAllTasks();
-    renderTasks();
-  }
-
-  formContainer.style.visibility = 'hidden';
-  formContainer.style.transition = 'all 0s';
-  form.reset();
+/*
+Grab form data and create task to local storage when a new task is being created
+Args:
+   - event target
+*/
+export function saveTask(e) {
+   e.preventDefault();
+   const form = document.getElementById("newTaskForm");
+   const formContainer = document.getElementById("formContainer");
+   const taskObj = createTask();
+   saveToLocalStorage(taskObj)
+   clearAllTasks();
+   renderTasks();
+   addEventListenerToEditButtons();
+   formContainer.style.visibility = 'hidden';
+   formContainer.style.transition = 'all 0s';
+   form.reset();
 };
-//Save New Task
-document.getElementById('newTaskForm').removeEventListener('submit', modifyTask);
-document.getElementById('newTaskForm').addEventListener("submit", saveTask);
 
 //Add Priority Select Behavior
 const allButtons = [...document.querySelectorAll("div.priority-button")];
